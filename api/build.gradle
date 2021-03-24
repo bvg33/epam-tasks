@@ -1,0 +1,4 @@
+dependencies {
+    compile project(":core")
+}
+mainClassName = 'main.java.App.App'
