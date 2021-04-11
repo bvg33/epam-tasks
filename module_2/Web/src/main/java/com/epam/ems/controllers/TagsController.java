@@ -1,20 +1,18 @@
 package com.epam.ems.controllers;
 
-import com.epam.ems.exceptions.DaoException;
-import com.epam.ems.service.Service;
+import com.epam.ems.service.CRDService;
 import com.epam.ems.dto.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/tags")
 public class TagsController {
     @Autowired
-    private Service<Tag> service;
+    private CRDService<Tag> service;
 
     @GetMapping
     public List<Tag> AllTags() {
@@ -22,20 +20,20 @@ public class TagsController {
     }
 
     @GetMapping("/{id}")
-    public Tag TagById(@PathVariable int id) throws Exception {
+    public Tag TagById(@PathVariable int id) {
         return service.getById(id);
     }
 
     @DeleteMapping("/{id}")
-    public String deleteTag(@PathVariable int id) throws DaoException {
+    public String deleteTag(@PathVariable int id) {
         service.deleteById(id);
-        return "Deleted successfully";
+        return "Deleted successfully"; //todo response entity
     }
 
     @PostMapping("/new")
     public String createTag(@RequestParam MultiValueMap<String, String> allRequestParams) {
-        service.update(allRequestParams);
-        return "Created successfully";
+        service.insertIntoDB(allRequestParams);
+        return "Created successfully"; //todo void or id
     }
 
     @GetMapping("/filter")

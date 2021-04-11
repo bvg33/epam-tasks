@@ -11,17 +11,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.epam.ems.dto.CertificateFields.*;
+import static com.epam.ems.dto.TagFields.*;
+
 @Component
 public class CertificateRowMapper implements ResultSetExtractor<List<Certificate>> {
-    private static final String ID = "id";
-    private static final String NAME = "name";
-    private static final String DESCRIPTION = "description";
-    private static final String CREATE_DATE = "create_date";
-    private static final String LAST_UPDATE_DATE = "last_update_date";
-    private static final String PRICE = "price";
-    private static final String DURATION = "duration";
-    private static final String TAG_ID = "TAG_ID";
-    private static final String TAG_NAME = "TAG_NAME";
 
     @Override
     public List<Certificate> extractData(ResultSet rs) throws SQLException, DataAccessException {

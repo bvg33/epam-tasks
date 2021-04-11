@@ -6,16 +6,10 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.epam.ems.dto.CertificateFields.*;
+
 @Component
 public class CertificateFieldExtractor implements FieldExtractor<Certificate> {
-    private static final String ID = "id";
-    private static final String NAME = "name";
-    private static final String DESCRIPTION = "description";
-    private static final String CREATE_DATE = "create_date";
-    private static final String LAST_UPDATE_DATE = "last_update_date";
-    private static final String PRICE = "price";
-    private static final String DURATION = "duration";
-
 
     @Override
     public Map<String, String> extract(Certificate item) {
@@ -38,9 +32,6 @@ public class CertificateFieldExtractor implements FieldExtractor<Certificate> {
     }
 
     private String intFieldToString(int field) {
-        if (field != 0) {
-            return String.valueOf(field);
-        }
-        return null;
+        return String.valueOf(field); //todo remove 2nd return
     }
 }

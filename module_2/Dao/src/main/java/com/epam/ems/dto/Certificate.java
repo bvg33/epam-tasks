@@ -25,14 +25,8 @@ public class Certificate {
     }
 
     public Certificate(int id, String name, String description, int price, int duration, String createDate, String lastUpdateDate, List<Tag> tags) {
+        this(name, description, price, duration, createDate, lastUpdateDate, tags);
         this.id = id;
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.duration = duration;
-        this.createDate = createDate;
-        this.lastUpdateDate = lastUpdateDate;
-        this.tags = new ArrayList<>(tags);
     }
 
     public int getId() {

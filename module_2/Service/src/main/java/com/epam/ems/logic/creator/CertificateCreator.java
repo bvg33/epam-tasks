@@ -10,15 +10,10 @@ import org.springframework.util.MultiValueMap;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.epam.ems.dto.CertificateFields.*;
+
 @Component
 public class CertificateCreator implements Creator<Certificate> {
-
-    private static final String ID = "id";
-    private static final String NAME = "name";
-    private static final String DESCRIPTION = "description";
-    private static final String TAG = "tag";
-    private static final String PRICE = "price";
-    private static final String DURATION = "duration";
 
     @Autowired
     private DateHandler dateHandler;

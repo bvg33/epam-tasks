@@ -7,15 +7,16 @@ import org.springframework.stereotype.Component;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static com.epam.ems.dto.TagFields.TAG_ID;
+import static com.epam.ems.dto.TagFields.TAG_NAME;
+
 @Component
 public class TagRowMapper implements RowMapper<Tag> {
-    private static final String NAME = "tag_name";
-    private static final String ID = "id";
 
     @Override
     public Tag mapRow(ResultSet rs, int rowNum) throws SQLException {
-        String name = rs.getString(NAME);
-        int id = rs.getInt(ID);
+        String name = rs.getString(TAG_NAME);
+        int id = rs.getInt(TAG_ID);
         return new Tag(id, name);
     }
 }

@@ -10,7 +10,7 @@ public class UpdateCertificateQueryCreator implements QueryCreator {
     public String createQuery(Map<String, String> fields) {
         StringJoiner joiner = new StringJoiner(",");
         for (Map.Entry<String, String> entry : fields.entrySet()) {
-            if (!entry.getKey().equals("id") && entry.getValue() != null) {
+            if (!entry.getKey().equals("id") && !entry.getValue().equals("0")) {
                 joiner.add(entry.getKey() + "=" + '\'' + entry.getValue() + '\'');
             }
         }

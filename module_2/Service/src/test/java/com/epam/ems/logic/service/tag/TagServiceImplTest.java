@@ -68,23 +68,6 @@ public class TagServiceImplTest {
     }
 
     @Test
-    public void testUpdate() {
-        List<Tag> actual = new ArrayList<>(Arrays.asList(new Tag(1, "chill"),
-                new Tag(2, "work")));
-        doAnswer(new Answer() {
-            @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
-                return actual.add(new Tag(3, "spa"));
-            }
-        }).when(dao).save(any(Tag.class));
-        when(creator.createObject(anyObject())).thenReturn(new Tag("spa"));
-        MultiValueMap<String, String> fields = new LinkedMultiValueMap<>();
-        fields.add("name", "spa");
-        service.update(fields);
-        assertEquals(tags, actual);
-    }
-
-    @Test
     public void testFilter_whenFilterByPartOfName() {
         when(dao.getByNamePart(anyString())).thenReturn(Arrays.asList(new Tag(2, "work")));
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();

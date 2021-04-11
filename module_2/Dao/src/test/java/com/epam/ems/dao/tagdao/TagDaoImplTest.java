@@ -15,7 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TagDaoImplTest {
 
     private HSQLDBConfig config=new HSQLDBConfig();
-    private DataSourceInitializer initializer=new DataSourceInitializer();
     private TagDaoImpl dao=new TagDaoImpl(config.dataSource(),new TagRowMapper());
 
     @Test

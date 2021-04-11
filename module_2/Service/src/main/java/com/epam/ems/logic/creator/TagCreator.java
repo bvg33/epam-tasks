@@ -4,13 +4,15 @@ import com.epam.ems.dto.Tag;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 
+import static com.epam.ems.dto.TagFields.TAG_NAME;
+
+
 @Component
 public class TagCreator implements Creator<Tag> {
-    private static final String NAME = "name";
 
     @Override
     public Tag createObject(MultiValueMap<String, String> allRequestParams) {
-        String name = allRequestParams.get(NAME).get(0);
+        String name = allRequestParams.get("tag_name").get(0);
         return new Tag(name);
     }
 }

@@ -1,18 +1,20 @@
 package com.epam.ems.dao;
 
+//import com.epam.ems.exceptions.DaoException;
+
 import com.epam.ems.exceptions.DaoException;
 
 import java.util.List;
 
-public interface Dao<T> {
+public interface CRDDao<T> {
 
-    T getById(int id) throws Exception;
+    T getById(int id) throws DaoException;
 
     List<T> getAll();
 
-    void save(T item);
+    void insert(T item);
 
-    void removeById(int id) throws DaoException;
+    void removeById(int id) ;
 
     List<T> getByTagName(String name);
 

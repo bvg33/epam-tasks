@@ -1,6 +1,7 @@
 package com.epam.ems.logic.service.certificate;
 
-import com.epam.ems.dao.Dao;
+import com.epam.ems.dao.CRDDao;
+import com.epam.ems.dao.CRUDDao;
 import com.epam.ems.dao.certificatedao.CertificateDaoImpl;
 import com.epam.ems.dto.Certificate;
 import com.epam.ems.dto.Tag;
@@ -34,7 +35,7 @@ import static org.mockito.Mockito.when;
 public class CertificateServiceTest {
 
     @Mock
-    private Dao<Certificate> dao = Mockito.mock(CertificateDaoImpl.class);
+    private CRUDDao<Certificate> dao = Mockito.mock(CertificateDaoImpl.class);
 
     @Mock
     private Creator<Certificate> creator = Mockito.mock(CertificateCreator.class);
