@@ -1,6 +1,7 @@
 package com.epam.ems.service;
 
 import com.epam.ems.dao.CRDDao;
+import com.epam.ems.exceptions.DaoException;
 import com.epam.ems.logic.creator.Creator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.MultiValueMap;
@@ -29,7 +30,7 @@ public abstract class AbstractService<T> implements CRDService<T> {
     }
 
     @Override
-    public T getById(int id) {
+    public T getById(int id) throws DaoException {
         return dao.getById(id);
     }
 
