@@ -20,3 +20,19 @@
 18. Концепции GIT - branch,commit,merge,tree, ...
 19. Что такое merge? - Слияние двух веток в одну с применением всех изменений 
 20. Что лежит внутри .git папки? - В .git хранится все, что вы делаете в своем проекте, только в сжатом формате. Поэтому из этой директории можно восстановить репозиторий.
+
+# REST API Basics
+
+1. IoC & DI - DI реализация IoC, помимо DI еще factory method,service locator
+2. Минимальные зависимости для поднятия контекста - spring context
+3. Spring Bean Lifcycle - https://habr.com/ru/post/470305/
+4. Виды конфигурации спринга - джава,аннотации,xml
+5. Какая конфигурация лучше? - никакая,у всех свои +-
+6. Какая разница между repository,component,service,controller ? - component родитель,остальные дети
+7. Можно ли написать свой scope если да то как? - можно,имплементировать интерфейс scope и зарегистрировать свой класс в BeanFactoryPostProccess
+8. REST,SOAP,Richardson model - https://habr.com/ru/post/131343/  https://www.intervolga.ru/blog/projects/relsy-veb-integratsii-rest-i-soap/  https://ru.qaz.wiki/wiki/Richardson_Maturity_Model https://m.habr.com/ru/post/319984/
+9. SOLID принципы. https://www.youtube.com/watch?v=rtmFCcjEgEw&t=1992s
+10. END2END tests. https://habr.com/ru/post/417395/
+11. ACID. https://ru.wikipedia.org/wiki/ACID
+12. Транзакции вокруг селектов.
+13. Stream API.
