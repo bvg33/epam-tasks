@@ -1,0 +1,26 @@
+package com.epam.ems.hateoas;
+
+import com.epam.ems.controllers.CertificateController;
+import org.springframework.hateoas.RepresentationModel;
+import org.springframework.stereotype.Component;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
+@Component
+public class CertificatesControllerHateoas implements Hateoas{
+
+    @Override
+    public void createHateoas(RepresentationModel entity) {
+        entity.add(linkTo(methodOn(CertificateController.class).getCertificateById(1)).withSelfRel());
+        entity.add(linkTo(methodOn(CertificateController.class).getAllCertificates(1, 5)).withSelfRel());
+        entity.add(linkTo(CertificateController.class).slash("new").withSelfRel());
+        entity.add(linkTo(CertificateController.class).slash(1).withSelfRel());
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+        map.add("getByTagName", "tag");
+        entity.add(linkTo(methodOn(CertificateController.class).filter(1, 1, map)).withSelfRel());
+        entity.add(linkTo(CertificateController.class).slash("update").slash("id").withSelfRel());
+    }
+}
