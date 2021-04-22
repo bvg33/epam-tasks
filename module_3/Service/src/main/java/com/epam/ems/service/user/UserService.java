@@ -7,6 +7,7 @@ import com.epam.ems.dto.Certificate;
 import com.epam.ems.dto.Tag;
 import com.epam.ems.dto.User;
 import com.epam.ems.dto.UserOrderInfo;
+import com.epam.ems.exceptions.NotEnoughMoneyException;
 import com.epam.ems.logic.handler.DateHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -36,14 +37,16 @@ public class UserService {
         return dao.getUserCertificatesById(id,page,elements);
     }
 
-    public void addCertificateToUser(int userId, int certificateId) {
+    public void addCertificateToUser(int userId, int certificateId) throws NotEnoughMoneyException {
         User user = dao.getById(userId);
         Certificate certificate = certificateDao.getById(certificateId);
         if (user.getMoney() >= certificate.getPrice()) {
             User newUser = createNewUser(user, certificate);
             orderDao.addCertificateToUser(createOrder(newUser, certificate));
             dao.updateUser(newUser);
-        }//todo else
+        }else{
+            throw new NotEnoughMoneyException("not enough money to buy this certificate");
+        }
     }
 
     private UserOrderInfo createOrder(User user, Certificate certificate) {

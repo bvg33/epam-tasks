@@ -4,6 +4,7 @@ import com.epam.ems.dto.lists.CertificateList;
 import com.epam.ems.dto.Tag;
 import com.epam.ems.dto.lists.UserList;
 import com.epam.ems.dto.lists.UserOrderInfoList;
+import com.epam.ems.exceptions.NotEnoughMoneyException;
 import com.epam.ems.hateoas.UsersControllerHateoas;
 import com.epam.ems.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,7 @@ public class UsersController {
 
     @PatchMapping("/{userId}/{certificateId}")
     public ResponseEntity<RepresentationModel> addCertificatesToUser(@Min(1) @PathVariable int userId,
-                                                                     @Min(1) @PathVariable int certificateId) {
+                                                                     @Min(1) @PathVariable int certificateId) throws NotEnoughMoneyException {
         RepresentationModel model = new RepresentationModel();
         hateoas.createHateoas(model);
         service.addCertificateToUser(userId, certificateId);
