@@ -25,11 +25,10 @@ public class TagDaoImpl implements CRDDao<Tag> {
     private CriteriaBuilder criteriaBuilder;
 
     @Autowired
-    private void TagDaoImpl(EntityManagerFactory entityManagerFactory) {
+    public TagDaoImpl(EntityManagerFactory entityManagerFactory) {
         this.entityManager=entityManagerFactory.createEntityManager();
         this.criteriaBuilder = entityManager.getCriteriaBuilder();
     }
-
 
     public Tag getById(int id) {
         return entityManager.find(Tag.class, id);

@@ -1,5 +1,6 @@
 package com.epam.ems.dto;
 
+import com.epam.ems.audit.AuditListener;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
@@ -7,6 +8,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 import java.util.List;
 
+@EntityListeners(AuditListener.class)
 @Entity
 @Table(name = "epam.users")
 public class User extends RepresentationModel<User> {

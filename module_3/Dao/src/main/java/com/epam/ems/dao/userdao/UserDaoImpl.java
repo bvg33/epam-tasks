@@ -22,7 +22,7 @@ public class UserDaoImpl {
     private CriteriaBuilder criteriaBuilder;
 
     @Autowired
-    private void UserDaoImpl(EntityManagerFactory entityManagerFactory) {
+    public UserDaoImpl(EntityManagerFactory entityManagerFactory) {
         this.entityManager = entityManagerFactory.createEntityManager();
         this.criteriaBuilder = entityManager.getCriteriaBuilder();
     }

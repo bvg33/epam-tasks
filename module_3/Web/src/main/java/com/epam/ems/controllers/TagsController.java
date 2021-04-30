@@ -48,7 +48,7 @@ public class TagsController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity createTag(@Min(1) @RequestBody Tag tag) {
+    public ResponseEntity createTag( @RequestBody Tag tag) {
         service.insertIntoDB(tag);
         RepresentationModel model=new RepresentationModel();
         hateoas.createHateoas(model);

@@ -38,7 +38,7 @@ public class CertificateRenovator implements Renovator<Certificate> {
             tags=oldEntity.getTags();
         }
         String currentDate = dateHandler.getCurrentDate();
-        return new Certificate(id, name, description, price, duration, oldEntity.getCreateDate(),
+        return new Certificate(id, name, description, price, duration, currentDate,
                 currentDate, tags);
     }
 }

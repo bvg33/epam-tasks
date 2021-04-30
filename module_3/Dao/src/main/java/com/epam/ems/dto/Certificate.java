@@ -1,5 +1,6 @@
 package com.epam.ems.dto;
 
+import com.epam.ems.audit.AuditListener;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@EntityListeners(AuditListener.class)
 @Entity
 @Table(name = "epam.gift_certificate")
 public class Certificate extends RepresentationModel<Certificate> {

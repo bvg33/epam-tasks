@@ -1,9 +1,11 @@
 package com.epam.ems.dto;
 
+import com.epam.ems.audit.AuditListener;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
 
+@EntityListeners(AuditListener.class)
 @Entity
 @Table(name = "epam.users_certificates")
 public class UserOrderInfo extends RepresentationModel {
