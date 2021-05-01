@@ -31,7 +31,6 @@ public class MySqlDataBaseConfig {
         return new HikariDataSource(config);
     }
 
-    @Autowired
     @Bean(name = "sessionFactory")
     public SessionFactory getSessionFactory(DataSource dataSource) throws Exception {
         Properties properties = new Properties();
@@ -47,7 +46,6 @@ public class MySqlDataBaseConfig {
         return sf;
     }
 
-    @Autowired
     @Bean(name = "transactionManager")
     public HibernateTransactionManager getTransactionManager(SessionFactory sessionFactory) {
         HibernateTransactionManager transactionManager = new HibernateTransactionManager(sessionFactory);

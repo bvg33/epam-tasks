@@ -10,31 +10,29 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.criteria.*;
-import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.List;
 
-import static com.epam.ems.dto.fields.Constants.*;
+import static com.epam.ems.dto.fields.Constant.*;
 
 
 @Repository
 public class CertificateDaoImpl implements CRUDDao<Certificate> {
 
-    private EntityManager entityManager;
-
-    private CriteriaBuilder criteriaBuilder;
+    private EntityManagerFactory entityManagerFactory;
 
     @Autowired
     private CRDDao<Tag> tagDao;
 
     @Autowired
     public CertificateDaoImpl(EntityManagerFactory entityManagerFactory) {
-        this.entityManager = entityManagerFactory.createEntityManager();
-        this.criteriaBuilder = entityManager.getCriteriaBuilder();
+        this.entityManagerFactory = entityManagerFactory;
     }
 
 
     public List<Certificate> getAll(int page, int elements) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Certificate> criteriaQuery = criteriaBuilder.createQuery(Certificate.class);
         Root<Certificate> root = criteriaQuery.from(Certificate.class);
         criteriaQuery.select(root);
@@ -46,11 +44,13 @@ public class CertificateDaoImpl implements CRUDDao<Certificate> {
     }
 
     public Certificate getById(int id) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
         return entityManager.find(Certificate.class, id);
     }
 
-    @Transactional
     public void removeById(int id) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaDelete<Certificate> criteriaDelete = criteriaBuilder.createCriteriaDelete(Certificate.class);
         Root<Certificate> root = criteriaDelete.from(Certificate.class);
         criteriaDelete.where(criteriaBuilder.equal(root.get("id"), id));
@@ -59,25 +59,27 @@ public class CertificateDaoImpl implements CRUDDao<Certificate> {
         entityManager.getTransaction().commit();
     }
 
-    @Transactional
     public void update(Certificate item) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
         entityManager.merge(item);
         entityManager.getTransaction().commit();
     }
 
-    @Transactional
     public void insert(Certificate item) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
         entityManager.persist(item);
         entityManager.getTransaction().commit();
     }
 
     public List<Certificate> getByNamePart(String name, int page, int elements) {
-        name = "%" + name + "%";
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        String newName = "%" + name + "%";
         CriteriaQuery<Certificate> criteriaQuery = criteriaBuilder.createQuery(Certificate.class);
         Root<Certificate> root = criteriaQuery.from(Certificate.class);
-        criteriaQuery.where(criteriaBuilder.like(root.get(CERTIFICATE_NAME), name));
+        criteriaQuery.where(criteriaBuilder.like(root.get(CERTIFICATE_NAME), newName));
         return entityManager
                 .createQuery(criteriaQuery)
                 .setMaxResults(elements)
@@ -86,6 +88,8 @@ public class CertificateDaoImpl implements CRUDDao<Certificate> {
     }
 
     public List<Certificate> getByTagName(String name, int page, int elements) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Certificate> criteriaQuery = criteriaBuilder.createQuery(Certificate.class);
         Root<Certificate> root = criteriaQuery.from(Certificate.class);
         Expression<Collection<Tag>> tags = root.get("tags");
@@ -100,13 +104,15 @@ public class CertificateDaoImpl implements CRUDDao<Certificate> {
     }
 
     public List<Certificate> getEntitiesSortedByParameter(String sortType, String param, int page, int elements) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Certificate> criteriaQuery = criteriaBuilder.createQuery(Certificate.class);
         Root<Certificate> root = criteriaQuery.from(Certificate.class);
-        if (param == SORT_BY_NAME) {
-            chooseSortType(sortType, criteriaQuery, root, CERTIFICATE_NAME);
+        if (param.equals(SORT_BY_NAME)) {
+            chooseSortType(sortType, criteriaQuery, root, CERTIFICATE_NAME, criteriaBuilder);
         }
-        if (param == SORT_BY_DATE) {
-            chooseSortType(sortType, criteriaQuery, root, "createDate");
+        if (param.equals(SORT_BY_DATE)) {
+            chooseSortType(sortType, criteriaQuery, root, CREATE_DATE, criteriaBuilder);
         }
         return entityManager
                 .createQuery(criteriaQuery)
@@ -116,10 +122,10 @@ public class CertificateDaoImpl implements CRUDDao<Certificate> {
     }
 
     private void chooseSortType(String sortType, CriteriaQuery<Certificate> criteriaQuery,
-                                Root<Certificate> root, String field) {
-        if (sortType.equals("desc")) {
+                                Root<Certificate> root, String field, CriteriaBuilder criteriaBuilder) {
+        if (sortType.equals(DESC_SORT)) {
             criteriaQuery.orderBy(criteriaBuilder.desc(root.get(field)));
-        } else if (sortType.equals("asc")) {
+        } else if (sortType.equals(ASC_SORT)) {
             criteriaQuery.orderBy(criteriaBuilder.asc(root.get(field)));
         }
     }

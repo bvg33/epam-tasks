@@ -1,12 +1,9 @@
 package com.epam.ems.logic.service.user;
 
-import com.epam.ems.dao.tagdao.TagDaoImpl;
 import com.epam.ems.dao.userdao.UserDaoImpl;
 import com.epam.ems.dto.Certificate;
 import com.epam.ems.dto.User;
-import com.epam.ems.service.tag.TagServiceImpl;
 import com.epam.ems.service.user.UserService;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -52,6 +49,6 @@ public class UserServiceUnitTest {
         when(dao.getUserCertificatesById(anyInt(), anyInt(), anyInt())).thenReturn(certificates);
         List<Certificate> actual = service.getUserCertificates(1, 1, 4);
         List<Certificate> expected = new ArrayList<>(certificates);
-        assertEquals(expected,actual);
+        assertEquals(expected, actual);
     }
 }

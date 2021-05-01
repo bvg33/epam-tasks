@@ -41,6 +41,6 @@ public class CertificateRenovatorTest {
         when(dateHandler.getCurrentDate()).thenReturn("2021-11-10 00:00:00");
 
         Certificate actual = renovator.updateObject(newCertificate, oldCertificate);
-        assertEquals(expected,actual);
+        assertEquals(expected, actual);
     }
 }

@@ -1,6 +1,5 @@
 package com.epam.ems.audit;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.PrePersist;

@@ -13,8 +13,8 @@ import org.springframework.validation.annotation.Validated;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.epam.ems.dto.fields.Constants.SORT_BY_DATE;
-import static com.epam.ems.dto.fields.Constants.SORT_BY_NAME;
+import static com.epam.ems.dto.fields.Constant.SORT_BY_DATE;
+import static com.epam.ems.dto.fields.Constant.SORT_BY_NAME;
 
 
 @Validated
@@ -40,14 +40,14 @@ public class CertificateService extends AbstractService<Certificate> implements 
     }
 
     @Override
-    public List<Certificate> doFilter(MultiValueMap<String, String> allRequestParams,int page,int elements) {
-        List<Certificate> sortedByParam = getListSortedByParameter(allRequestParams,page,elements);
-        List<Certificate> foundByTagNames = findByTagNames(allRequestParams,page,elements);
-        List<Certificate> foundByPartOfName = findByPartOfName(allRequestParams,page,elements);
+    public List<Certificate> doFilter(MultiValueMap<String, String> allRequestParams, int page, int elements) {
+        List<Certificate> sortedByParam = getListSortedByParameter(allRequestParams, page, elements);
+        List<Certificate> foundByTagNames = findByTagNames(allRequestParams, page, elements);
+        List<Certificate> foundByPartOfName = findByPartOfName(allRequestParams, page, elements);
         List<Certificate> foundedCertificates = new ArrayList<>();
         fillListIfEmpty(foundByPartOfName, foundByTagNames, sortedByParam);
-        foundByTagNames.stream().filter(foundByPartOfName::contains).
-                forEach(foundedCertificates::add);
+        foundByTagNames.stream().filter(foundByPartOfName::contains);
+        foundedCertificates.addAll(foundByTagNames);
         if (!sortedByParam.isEmpty()) {
             sortedByParam.retainAll(foundedCertificates);
             foundedCertificates = sortedByParam;
@@ -55,15 +55,15 @@ public class CertificateService extends AbstractService<Certificate> implements 
         return foundedCertificates;
     }
 
-    private List<Certificate> getListSortedByParameter(MultiValueMap<String, String> allRequestParams,int page,int elements) {
+    private List<Certificate> getListSortedByParameter(MultiValueMap<String, String> allRequestParams, int page, int elements) {
         String sortType;
         List<Certificate> sortedList = new ArrayList<>();
         if (allRequestParams.containsKey(SORT_BY_NAME)) {
             sortType = getAllParameters(SORT_BY_NAME, allRequestParams).get(0);
-            sortedList = dao.getEntitiesSortedByParameter(sortType, SORT_BY_NAME,page,elements);
+            sortedList = dao.getEntitiesSortedByParameter(sortType, SORT_BY_NAME, page, elements);
         } else if (allRequestParams.containsKey(SORT_BY_DATE)) {
             sortType = getAllParameters(SORT_BY_DATE, allRequestParams).get(0);
-            sortedList = dao.getEntitiesSortedByParameter(sortType, SORT_BY_DATE,page,elements);
+            sortedList = dao.getEntitiesSortedByParameter(sortType, SORT_BY_DATE, page, elements);
         }
         return sortedList;
     }

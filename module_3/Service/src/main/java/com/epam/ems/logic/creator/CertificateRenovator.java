@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static java.util.Objects.isNull;
+
 @Component
 public class CertificateRenovator implements Renovator<Certificate> {
 
@@ -15,27 +17,27 @@ public class CertificateRenovator implements Renovator<Certificate> {
     private DateHandler dateHandler;
 
     @Override
-    public Certificate updateObject(Certificate newEntity,Certificate oldEntity) {
+    public Certificate updateObject(Certificate newEntity, Certificate oldEntity) {
         int id = oldEntity.getId();
         String name = newEntity.getName();
-        if(name==null){
-            name=oldEntity.getName();
+        if (isNull(name)) {
+            name = oldEntity.getName();
         }
         String description = newEntity.getDescription();
-        if(description==null){
-            description=oldEntity.getDescription();
+        if (isNull(description)) {
+            description = oldEntity.getDescription();
         }
         int price = newEntity.getPrice();
-        if(price==0){
-            price=oldEntity.getPrice();
+        if (price == 0) {
+            price = oldEntity.getPrice();
         }
         int duration = newEntity.getDuration();
-        if(duration==0){
-            duration=oldEntity.getDuration();
+        if (duration == 0) {
+            duration = oldEntity.getDuration();
         }
         List<Tag> tags = newEntity.getTags();
-        if(tags==null){
-            tags=oldEntity.getTags();
+        if (isNull(tags)) {
+            tags = oldEntity.getTags();
         }
         String currentDate = dateHandler.getCurrentDate();
         return new Certificate(id, name, description, price, duration, currentDate,

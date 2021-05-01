@@ -29,12 +29,12 @@ public class UserService {
     @Autowired
     private DateHandler dateHandler;
 
-    public List<User> getAllUsers(int page,int elements) {
-        return dao.getAll(page,elements);
+    public List<User> getAllUsers(int page, int elements) {
+        return dao.getAll(page, elements);
     }
 
-    public List<Certificate> getUserCertificates(int id,int page,int elements) {
-        return dao.getUserCertificatesById(id,page,elements);
+    public List<Certificate> getUserCertificates(int id, int page, int elements) {
+        return dao.getUserCertificatesById(id, page, elements);
     }
 
     public void addCertificateToUser(int userId, int certificateId) throws NotEnoughMoneyException {
@@ -44,7 +44,7 @@ public class UserService {
             User newUser = createNewUser(user, certificate);
             orderDao.addCertificateToUser(createOrder(newUser, certificate));
             dao.updateUser(newUser);
-        }else{
+        } else {
             throw new NotEnoughMoneyException("not enough money to buy this certificate");
         }
     }
@@ -69,11 +69,11 @@ public class UserService {
         return newUser;
     }
 
-    public List<UserOrderInfo> getUserOrdersInfo(int id,int page,int elements) {
-        return orderDao.getUserCertificatesInfo(id,page,elements);
+    public List<UserOrderInfo> getUserOrdersInfo(int id, int page, int elements) {
+        return orderDao.getUserCertificatesInfo(id, page, elements);
     }
 
-    public Tag theMostWidelyUsedTag(){
+    public Tag theMostWidelyUsedTag() {
         return dao.getTheMostWidelyUsedTag();
     }
 }

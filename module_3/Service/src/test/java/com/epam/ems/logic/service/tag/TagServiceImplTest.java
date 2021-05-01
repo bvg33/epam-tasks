@@ -44,7 +44,7 @@ public class TagServiceImplTest {
     public void testFilter_whenFilterByPartOfName() {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("getByNamePart", "1");
-        List<Tag> actual = service.doFilter(params,1,4);
+        List<Tag> actual = service.doFilter(params, 1, 4);
         List<Tag> expected = Arrays.asList(new Tag(1, "tag1"));
         assertEquals(expected, actual);
     }
@@ -53,7 +53,7 @@ public class TagServiceImplTest {
     public void testFilter_whenFilterByTagName() {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("getByTagName", "tag1");
-        List<Tag> actual = service.doFilter(params,1,4);
+        List<Tag> actual = service.doFilter(params, 1, 4);
         List<Tag> expected = Arrays.asList(new Tag(1, "tag1"));
         assertEquals(expected, actual);
     }
@@ -62,7 +62,7 @@ public class TagServiceImplTest {
     public void testFilter_whenFilterSortByName() {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("sortByName", "asc");
-        List<Tag> actual = service.doFilter(params,1,4);
+        List<Tag> actual = service.doFilter(params, 1, 4);
         List<Tag> expected = Arrays.asList(new Tag("tag1"), new Tag("tag2"), new Tag("tag3"));
         assertEquals(expected, actual);
     }

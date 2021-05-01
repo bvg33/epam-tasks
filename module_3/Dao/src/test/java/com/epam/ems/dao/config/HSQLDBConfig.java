@@ -15,15 +15,17 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
+import static com.epam.ems.dao.config.HSQLDBConfigConstant.*;
+
 @TestConfiguration
 @EnableTransactionManagement
-public class HSQLDBConfig{
+public class HSQLDBConfig {
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan(new String[]{"com.epam.ems"});
+        em.setPackagesToScan(new String[]{PACKAGE});
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
@@ -36,8 +38,8 @@ public class HSQLDBConfig{
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
         EmbeddedDatabase db = builder
                 .setType(EmbeddedDatabaseType.HSQL)
-                .addScript("createTables.sql")
-                .addScript("fillTables.sql")
+                .addScript(CREATE_TABLES_SCRIPT)
+                .addScript(FILL_TABLES_SCRIPT)
                 .build();
         return db;
     }

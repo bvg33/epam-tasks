@@ -27,10 +27,9 @@ public class CertificateController {
     @Autowired
     private CertificatesControllerHateoas hateoas;
 
-
     @GetMapping
     public ResponseEntity<CertificateList> getAllCertificates(@Min(1) @RequestParam int page,
-                                                             @Min(1) @RequestParam int elements) {
+                                                              @Min(1) @RequestParam int elements) {
         CertificateList list = new CertificateList(service.getAll(page, elements));
         hateoas.createHateoas(list);
         return ResponseEntity.status(OK).body(list);
@@ -60,7 +59,7 @@ public class CertificateController {
     }
 
     @PatchMapping("/update/{id}")
-    public ResponseEntity updateCertificate(@Min(1) @PathVariable int id,@RequestBody Certificate certificate) {
+    public ResponseEntity updateCertificate(@Min(1) @PathVariable int id, @RequestBody Certificate certificate) {
         service.update(certificate, id);
         RepresentationModel model = new RepresentationModel();
         hateoas.createHateoas(model);
@@ -68,8 +67,8 @@ public class CertificateController {
     }
 
     @GetMapping("/filter")
-    public ResponseEntity filter(@Min(1) @RequestParam int page,@Min(1) @RequestParam int elements,
-                                @RequestParam MultiValueMap<String, String> allRequestParams) {
+    public ResponseEntity filter(@Min(1) @RequestParam int page, @Min(1) @RequestParam int elements,
+                                 @RequestParam MultiValueMap<String, String> allRequestParams) {
         CertificateList list = new CertificateList(service.doFilter(allRequestParams, page, elements));
         hateoas.createHateoas(list);
         return ResponseEntity.status(OK).body(list);

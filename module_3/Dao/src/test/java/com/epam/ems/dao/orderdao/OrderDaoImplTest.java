@@ -26,7 +26,7 @@ public class OrderDaoImplTest {
     @Test
     public void testGetUserCertificateInfo() {
         List<UserOrderInfo> actual = dao.getUserCertificatesInfo(1, 1, 5);
-        List<UserOrderInfo> expected = asList(new UserOrderInfo(1, 1, 5, "2021-11-10 00:00:00"));
-        assertEquals(expected,actual);
+        List<UserOrderInfo> expected = asList(new UserOrderInfo(1, 1, 1, 5, "2021-11-10 00:00:00.000000"));
+        assertEquals(expected, actual);
     }
 }

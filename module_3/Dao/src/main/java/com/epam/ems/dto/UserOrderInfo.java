@@ -1,10 +1,16 @@
 package com.epam.ems.dto;
 
 import com.epam.ems.audit.AuditListener;
+import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
+import java.util.Objects;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
 @EntityListeners(AuditListener.class)
 @Entity
 @Table(name = "epam.users_certificates")
@@ -13,42 +19,29 @@ public class UserOrderInfo extends RepresentationModel {
     private int id;
 
     @Column(name = "user_id")
+    @NonNull
     private int userId;
-
     @Column(name = "certificate_id")
+    @NonNull
     private int certificateId;
     @Column(name = "certificate_price")
+    @NonNull
     private int certificatePrice;
     @Column(name = "buy_date")
+    @NonNull
     private String date;
 
-    public UserOrderInfo(int userId, int certificateId, int certificatePrice, String date) {
-        this.userId = userId;
-        this.certificateId = certificateId;
-        this.certificatePrice = certificatePrice;
-        this.date = date;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        UserOrderInfo orderInfo = (UserOrderInfo) o;
+        return userId == orderInfo.userId && certificateId == orderInfo.certificateId && certificatePrice == orderInfo.certificatePrice;
     }
 
-    public UserOrderInfo() {
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public int getCertificateId() {
-        return certificateId;
-    }
-
-    public int getCertificatePrice() {
-        return certificatePrice;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public int getId(){
-        return id;
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), userId, certificateId, certificatePrice);
     }
 }

@@ -2,6 +2,8 @@ CREATE SCHEMA IF NOT EXISTS epam;
 drop table epam.tag if exists;
 drop table epam.gift_certificate if exists;
 drop table epam.certificate_tag if exists;
+drop table epam.users if exists;
+drop table epam.users_certificates if exists;
 /*----------------------tag-----------------------------*/
 CREATE TABLE epam.tag
 (

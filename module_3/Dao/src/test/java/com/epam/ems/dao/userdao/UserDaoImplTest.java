@@ -24,12 +24,12 @@ public class UserDaoImplTest {
 
     @Autowired
     private UserDaoImpl dao;
-    private final List<User> users = asList(new User("dima", 5,
-            asList(new Certificate("sad", "dsf", 4, 5,
-                    "2021-11-10 00:00:00.000000", "2021-11-10 00:00:00.000000",
-                    asList(new Tag("tag1"), new Tag("tag2")))), 10),
-            new User("vasya",5,asList(new Certificate("name1","description",5,5,
-                    "2021-04-03 21:07:00","2021-04-04 20:46:00",asList(new Tag("tag2")))),10));
+    private final List<User> users = asList(new User("dima", 50,
+                    asList(new Certificate("sad", "dsf", 4, 5,
+                            "2021-11-10 00:00:00.000000", "2021-11-10 00:00:00.000000",
+                            asList(new Tag("tag1"), new Tag("tag2")))), 15),
+            new User("vasya", 30, asList(new Certificate("name1", "description", 5, 5,
+                    "2021-04-03 21:07:00.000000", "2021-04-04 20:46:00.000000", asList(new Tag("tag2")))), 5));
 
     @Test
     public void testGetAll() {

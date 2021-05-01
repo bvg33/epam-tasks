@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface CRDService<T> {
 
-    List<T> getAll(int page,int elements);
+    List<T> getAll(int page, int elements);
 
     void insertIntoDB(T entity);
 
     T getById(int id);
 
-    void deleteById(int id) ;
+    void deleteById(int id);
 
-    List<T> doFilter(MultiValueMap<String, String> allRequestParams,int page,int elements);
+    List<T> doFilter(MultiValueMap<String, String> allRequestParams, int page, int elements);
 }

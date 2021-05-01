@@ -39,8 +39,8 @@ public class TagServiceImplUnitTest {
 
     @Test
     public void testGetAll() {
-        when(dao.getAll(anyInt(),anyInt())).thenReturn(tags);
-        List<Tag> actual = service.getAll(1,5);
+        when(dao.getAll(anyInt(), anyInt())).thenReturn(tags);
+        List<Tag> actual = service.getAll(1, 5);
         assertEquals(tags, actual);
     }
 
@@ -57,7 +57,7 @@ public class TagServiceImplUnitTest {
         List<Tag> actual = new ArrayList<>(tags);
         doAnswer(new Answer() {
             @Override
-            public Object answer(InvocationOnMock invocation){
+            public Object answer(InvocationOnMock invocation) {
                 return actual.remove(0);
             }
         }).when(dao).removeById(1);
@@ -68,30 +68,30 @@ public class TagServiceImplUnitTest {
 
     @Test
     public void testFilter_whenFilterByPartOfName() {
-        when(dao.getByNamePart(anyString(),anyInt(),anyInt())).thenReturn(Arrays.asList(new Tag(2, "work")));
+        when(dao.getByNamePart(anyString(), anyInt(), anyInt())).thenReturn(Arrays.asList(new Tag(2, "work")));
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("getByNamePart", "o");
-        List<Tag> actual = service.doFilter(params,1,4);
+        List<Tag> actual = service.doFilter(params, 1, 4);
         List<Tag> expected = Arrays.asList(new Tag(2, "work"));
         assertEquals(expected, actual);
     }
 
     @Test
     public void testFilter_whenFilterByTagName() {
-        when(dao.getByTagName(anyString(),anyInt(),anyInt())).thenReturn(Arrays.asList(new Tag(2, "work")));
+        when(dao.getByTagName(anyString(), anyInt(), anyInt())).thenReturn(Arrays.asList(new Tag(2, "work")));
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("getByTagName", "work");
-        List<Tag> actual = service.doFilter(params,1,4);
+        List<Tag> actual = service.doFilter(params, 1, 4);
         List<Tag> expected = Arrays.asList(new Tag(2, "work"));
         assertEquals(expected, actual);
     }
 
     @Test
     public void testFilter_whenFilterSortByName() {
-        when(dao.getEntitiesSortedByParameter(anyString(), anyString(),anyInt(),anyInt())).thenReturn(new ArrayList<>(tags));
+        when(dao.getEntitiesSortedByParameter(anyString(), anyString(), anyInt(), anyInt())).thenReturn(new ArrayList<>(tags));
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("sortByName", "asc");
-        List<Tag> actual = service.doFilter(params,1,4);
+        List<Tag> actual = service.doFilter(params, 1, 4);
         assertEquals(tags, actual);
     }
 }

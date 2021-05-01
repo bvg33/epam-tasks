@@ -21,13 +21,10 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {UserService.class, CertificateDaoImpl.class, UserDaoImpl.class,
@@ -35,12 +32,12 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 public class UserServiceTest {
 
-    private final List<User> users = asList(new User("dima", 5,
+    private final List<User> users = asList(new User("dima", 50,
                     asList(new Certificate("sad", "dsf", 4, 5,
                             "2021-11-10 00:00:00.000000", "2021-11-10 00:00:00.000000",
-                            asList(new Tag("tag1"), new Tag("tag2")))), 10),
-            new User("vasya", 5, asList(new Certificate("name1", "description", 5, 5,
-                    "2021-04-03 21:07:00", "2021-04-04 20:46:00", asList(new Tag("tag2")))), 10));
+                            asList(new Tag("tag1"), new Tag("tag2")))), 15),
+            new User("vasya", 30, asList(new Certificate("name1", "description", 5, 5,
+                    "2021-04-03 21:07:00.000000", "2021-04-04 20:46:00.000000", asList(new Tag("tag2")))), 5));
 
     @Autowired
     private UserService service;
@@ -61,8 +58,8 @@ public class UserServiceTest {
 
     @Test
     public void testGetUserOrdersInfo() {
-        List<UserOrderInfo> actual = service.getUserOrdersInfo(1,1,5);
+        List<UserOrderInfo> actual = service.getUserOrdersInfo(1, 1, 5);
         List<UserOrderInfo> expected = asList(new UserOrderInfo(1, 1, 5, "2021-11-10 00:00:00"));
-        assertEquals(expected,actual);
+        assertEquals(expected, actual);
     }
 }

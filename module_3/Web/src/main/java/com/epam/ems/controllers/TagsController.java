@@ -26,7 +26,7 @@ public class TagsController {
     private CRDService<Tag> service;
 
     @GetMapping
-    public ResponseEntity AllTags(@Min(1) @RequestParam int page,@Min(1) @RequestParam int elements) {
+    public ResponseEntity AllTags(@Min(1) @RequestParam int page, @Min(1) @RequestParam int elements) {
         TagList list = new TagList(service.getAll(page, elements));
         hateoas.createHateoas(list);
         return ResponseEntity.status(OK).body(list);
@@ -42,23 +42,23 @@ public class TagsController {
     @DeleteMapping("/{id}")
     public ResponseEntity deleteTag(@Min(1) @PathVariable int id) {
         service.deleteById(id);
-        RepresentationModel model=new RepresentationModel();
+        RepresentationModel model = new RepresentationModel();
         hateoas.createHateoas(model);
         return ResponseEntity.status(NO_CONTENT).body(model);
     }
 
     @PostMapping("/new")
-    public ResponseEntity createTag( @RequestBody Tag tag) {
+    public ResponseEntity createTag(@RequestBody Tag tag) {
         service.insertIntoDB(tag);
-        RepresentationModel model=new RepresentationModel();
+        RepresentationModel model = new RepresentationModel();
         hateoas.createHateoas(model);
         return ResponseEntity.status(CREATED).body(model);
     }
 
     @GetMapping("/filter")
-    public ResponseEntity<TagList> sortByParam(@Min(1) @RequestParam int page,@Min(1) @RequestParam int elements,
-                                                @RequestParam MultiValueMap<String, String> allRequestParams) {
-        TagList list=new TagList(service.doFilter(allRequestParams, page, elements));
+    public ResponseEntity<TagList> sortByParam(@Min(1) @RequestParam int page, @Min(1) @RequestParam int elements,
+                                               @RequestParam MultiValueMap<String, String> allRequestParams) {
+        TagList list = new TagList(service.doFilter(allRequestParams, page, elements));
         hateoas.createHateoas(list);
         return ResponseEntity.status(OK).body(list);
     }

@@ -9,23 +9,22 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
 public class OrderDaoImpl {
 
-    private EntityManager entityManager;
-
-    private CriteriaBuilder criteriaBuilder;
+    private EntityManagerFactory entityManagerFactory;
 
     @Autowired
     public OrderDaoImpl(EntityManagerFactory entityManagerFactory) {
-        this.entityManager = entityManagerFactory.createEntityManager();
-        this.criteriaBuilder = entityManager.getCriteriaBuilder();
+        this.entityManagerFactory = entityManagerFactory;
     }
 
+
     public List<UserOrderInfo> getUserCertificatesInfo(int userId, int page, int elements) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<UserOrderInfo> criteriaQuery = criteriaBuilder.createQuery(UserOrderInfo.class);
         Root<UserOrderInfo> root = criteriaQuery.from(UserOrderInfo.class);
         criteriaQuery.where(criteriaBuilder.equal(root.get("userId"), userId));
@@ -36,8 +35,8 @@ public class OrderDaoImpl {
                 .getResultList();
     }
 
-    @Transactional
     public void addCertificateToUser(UserOrderInfo orderInfo) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
         entityManager.persist(orderInfo);
         entityManager.getTransaction().commit();

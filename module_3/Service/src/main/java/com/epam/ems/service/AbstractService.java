@@ -1,7 +1,6 @@
 package com.epam.ems.service;
 
 import com.epam.ems.dao.CRDDao;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.MultiValueMap;
 
 import java.util.ArrayList;
@@ -20,8 +19,8 @@ public abstract class AbstractService<T> implements CRDService<T> {
     }
 
     @Override
-    public List<T> getAll(int page,int elements) {
-        return dao.getAll(page,elements);
+    public List<T> getAll(int page, int elements) {
+        return dao.getAll(page, elements);
     }
 
     @Override
@@ -56,21 +55,21 @@ public abstract class AbstractService<T> implements CRDService<T> {
         return param;
     }
 
-    protected List<T> findByPartOfName(MultiValueMap<String, String> allRequestParams,int page,int elements) {
+    protected List<T> findByPartOfName(MultiValueMap<String, String> allRequestParams, int page, int elements) {
         String parameter = getParameter(GET_BY_NAME_PART, allRequestParams);
         List<T> entities = new ArrayList<>();
         if (!parameter.isEmpty()) {
-            entities = dao.getByNamePart(parameter,page,elements);
+            entities = dao.getByNamePart(parameter, page, elements);
         }
         return entities;
     }
 
-    protected List<T> findByTagNames(MultiValueMap<String, String> allRequestParams,int page,int elements) {
+    protected List<T> findByTagNames(MultiValueMap<String, String> allRequestParams, int page, int elements) {
         List<String> parameters = getAllParameters(GET_BY_TAG_NAME, allRequestParams);
         List<T> finalList = new ArrayList<>();
         if (!parameters.isEmpty()) {
             for (String parameter : parameters) {
-              findCertificatesWithTags(parameter, finalList,page,elements);
+                findCertificatesWithTags(parameter, finalList, page, elements);
             }
         }
         return finalList;
@@ -87,11 +86,11 @@ public abstract class AbstractService<T> implements CRDService<T> {
         }
     }
 
-    private void findCertificatesWithTags(String parameter, List<T> finalList,int page,int elements){
-        List<T> entities = dao.getByTagName(parameter,page,elements);
-        if(!finalList.isEmpty()){
+    private void findCertificatesWithTags(String parameter, List<T> finalList, int page, int elements) {
+        List<T> entities = dao.getByTagName(parameter, page, elements);
+        if (!finalList.isEmpty()) {
             finalList.retainAll(entities);
-        }else{
+        } else {
             finalList.addAll(entities);
         }
     }

@@ -9,25 +9,23 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.criteria.*;
-import javax.transaction.Transactional;
 import java.util.List;
 
-import static com.epam.ems.dto.fields.Constants.*;
+import static com.epam.ems.dto.fields.Constant.*;
 
 @Repository
 public class UserDaoImpl {
 
-    private EntityManager entityManager;
-
-    private CriteriaBuilder criteriaBuilder;
+    private EntityManagerFactory entityManagerFactory;
 
     @Autowired
     public UserDaoImpl(EntityManagerFactory entityManagerFactory) {
-        this.entityManager = entityManagerFactory.createEntityManager();
-        this.criteriaBuilder = entityManager.getCriteriaBuilder();
+        this.entityManagerFactory = entityManagerFactory;
     }
 
     public List<User> getAll(int page, int elements) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
         Root<User> root = criteriaQuery.from(User.class);
         criteriaQuery.select(root);
@@ -38,18 +36,21 @@ public class UserDaoImpl {
                 .getResultList();
     }
 
-    @Transactional
     public void updateUser(User user) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
         entityManager.merge(user);
         entityManager.getTransaction().commit();
     }
 
     public User getById(int id) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
         return entityManager.find(User.class, id);
     }
 
     public List<Certificate> getUserCertificatesById(int id, int page, int elements) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Certificate> criteriaQuery = criteriaBuilder.createQuery(Certificate.class);
         Root<User> userRoot = criteriaQuery.from(User.class);
         criteriaQuery.select(userRoot.get(CERTIFICATES)).where(criteriaBuilder.equal(userRoot.get(USER_ID), id));
@@ -61,7 +62,9 @@ public class UserDaoImpl {
     }
 
     public Tag getTheMostWidelyUsedTag() {
-        int userId = findUserWithMaxOrderPrice();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        int userId = findUserWithMaxOrderPrice(criteriaBuilder, entityManager);
         CriteriaQuery<Tag> tagCriteriaQuery = criteriaBuilder.createQuery(Tag.class);
         Root<User> userRoot = tagCriteriaQuery.from(User.class);
         tagCriteriaQuery.select(userRoot.join(CERTIFICATES).join(TAGS));
@@ -72,15 +75,15 @@ public class UserDaoImpl {
 
     }
 
-    private int findUserWithMaxOrderPrice() {
+    private int findUserWithMaxOrderPrice(CriteriaBuilder criteriaBuilder, EntityManager entityManager) {
         CriteriaQuery<Integer> criteriaQuery = criteriaBuilder.createQuery(Integer.class);
         Root<User> userRoot = criteriaQuery.from(User.class);
         criteriaQuery.select(criteriaBuilder.max(userRoot.get(OVERAGE_ORDER_PRICE)));
         int maxOrderPrice = entityManager.createQuery(criteriaQuery).getSingleResult();
-        return findUserIdByMaxOrderPrice(maxOrderPrice);
+        return findUserIdByMaxOrderPrice(maxOrderPrice, criteriaBuilder, entityManager);
     }
 
-    private int findUserIdByMaxOrderPrice(int maxOrderPrice) {
+    private int findUserIdByMaxOrderPrice(int maxOrderPrice, CriteriaBuilder criteriaBuilder, EntityManager entityManager) {
         CriteriaQuery<Integer> criteriaQuery = criteriaBuilder.createQuery(Integer.class);
         Root<User> userRoot = criteriaQuery.from(User.class);
         criteriaQuery.select(userRoot.get(USER_ID));

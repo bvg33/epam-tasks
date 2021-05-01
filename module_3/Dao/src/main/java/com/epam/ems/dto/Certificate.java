@@ -1,6 +1,7 @@
 package com.epam.ems.dto;
 
 import com.epam.ems.audit.AuditListener;
+import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
@@ -10,6 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @EntityListeners(AuditListener.class)
 @Entity
 @Table(name = "epam.gift_certificate")
@@ -19,7 +23,6 @@ public class Certificate extends RepresentationModel<Certificate> {
     @Column(name = "certificate_id")
     @Min(1)
     private int id;
-
     @Pattern(regexp = "^.{0,45}$")
     private String name;
     @Pattern(regexp = "^.{0,45}$")
@@ -35,16 +38,13 @@ public class Certificate extends RepresentationModel<Certificate> {
     @Pattern(regexp = "^.{0,45}$")
     private String lastUpdateDate;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
             name = "epam.certificate_tag",
-            joinColumns = { @JoinColumn(name = "certificate_id") },
-            inverseJoinColumns = { @JoinColumn(name = "tag_id") }
+            joinColumns = {@JoinColumn(name = "certificate_id")},
+            inverseJoinColumns = {@JoinColumn(name = "tag_id")}
     )
     private List<Tag> tags;
-
-    public Certificate() {
-    }
 
     public Certificate(String name, String description, int price, int duration, String createDate, String lastUpdateDate, List<Tag> tags) {
         this.name = name;
@@ -54,43 +54,6 @@ public class Certificate extends RepresentationModel<Certificate> {
         this.createDate = createDate;
         this.lastUpdateDate = lastUpdateDate;
         this.tags = new ArrayList<>(tags);
-    }
-
-    public Certificate(int id, String name, String description, int price, int duration, String createDate, String lastUpdateDate, List<Tag> tags) {
-        this(name, description, price, duration, createDate, lastUpdateDate, tags);
-        this.id = id;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public String getCreateDate() {
-        return createDate;
-    }
-
-    public String getLastUpdateDate() {
-        return lastUpdateDate;
-    }
-
-    public List<Tag> getTags() {
-        return new ArrayList<>(tags);
     }
 
     @Override

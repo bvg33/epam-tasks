@@ -53,7 +53,7 @@ public class CertificateServiceTest {
     }
 
     @Test
-    public void testFilter_whenFilterByTagName()  {
+    public void testFilter_whenFilterByTagName() {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("getByTagName", "tag2");
         List<Certificate> actual = service.doFilter(params, 1, 5);
@@ -77,7 +77,7 @@ public class CertificateServiceTest {
     }
 
     @Test
-    public void testFilter_whenFilterByMultiParams(){
+    public void testFilter_whenFilterByMultiParams() {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("getByNamePart", "a");
         params.add("getByTagName", "tag1");
@@ -85,14 +85,14 @@ public class CertificateServiceTest {
         List<Certificate> expected = Arrays.asList(new Certificate("sad", "dsf", 4, 5,
                 "2021-11-10 00:00:00.000000", "2021-11-10 00:00:00.000000",
                 Arrays.asList(new Tag("tag1"), new Tag("tag2"))));
-        assertEquals(expected,actual);
+        assertEquals(expected, actual);
     }
 
     @Test
     public void testGetEntitiesSortedByParam_sortByName() {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("sortByName", "asc");
-        List<Certificate> actual = service.doFilter(params,1,5);
+        List<Certificate> actual = service.doFilter(params, 1, 5);
         List<Certificate> expected = Arrays.asList(new Certificate("name1", "description", 5, 5,
                         "2021-04-03 21:07:00.000000", "2021-04-04 20:46:00.000000", Arrays.asList(new Tag("tag2"))),
                 new Certificate("sad", "dsf", 4, 5,
@@ -106,7 +106,7 @@ public class CertificateServiceTest {
     public void testGetEntitiesSortedByParam_sortByDate() {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("sortByDate", "asc");
-        List<Certificate> actual = service.doFilter(params,1,5);
+        List<Certificate> actual = service.doFilter(params, 1, 5);
         List<Certificate> expected = Arrays.asList(new Certificate("name1", "description", 5, 5,
                         "2021-04-03 21:07:00.000000", "2021-04-04 20:46:00.000000", Arrays.asList(new Tag("tag2"))),
                 new Certificate("sdfkl", "1", 5, 4,
