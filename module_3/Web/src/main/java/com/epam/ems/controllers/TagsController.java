@@ -1,5 +1,6 @@
 package com.epam.ems.controllers;
 
+import com.epam.ems.dto.Role;
 import com.epam.ems.dto.Tag;
 import com.epam.ems.dto.lists.TagList;
 import com.epam.ems.hateoas.TagControllerHateoas;
@@ -7,6 +8,7 @@ import com.epam.ems.service.CRDService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.util.MultiValueMap;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;

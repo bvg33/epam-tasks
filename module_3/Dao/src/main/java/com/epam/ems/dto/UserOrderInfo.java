@@ -5,9 +5,9 @@ import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Data
+@EqualsAndHashCode(exclude = "id", callSuper = false)
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
@@ -30,18 +30,4 @@ public class UserOrderInfo extends RepresentationModel {
     @Column(name = "buy_date")
     @NonNull
     private String date;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        UserOrderInfo orderInfo = (UserOrderInfo) o;
-        return userId == orderInfo.userId && certificateId == orderInfo.certificateId && certificatePrice == orderInfo.certificatePrice;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), userId, certificateId, certificatePrice);
-    }
 }

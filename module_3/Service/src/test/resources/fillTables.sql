@@ -23,9 +23,9 @@ insert into epam.certificate_tag
 values (3, 3);
 /*-------------------USERS-----------------------------*/
 insert into epam.users
-values (1, 'dima', 50, 15);
+values (1,'password','USER','dima', 50, 15);
 insert into epam.users
-values (2, 'vasya', 30, 5);
+values (2,'password','USER','vasya', 30, 5);
 /*------------------USERS_CERTIFICATES----------------*/
 insert into epam.users_certificates
 values (1, 1, 5, '2021-11-10 00:00:00', 1);

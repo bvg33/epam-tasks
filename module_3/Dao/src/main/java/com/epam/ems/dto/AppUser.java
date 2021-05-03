@@ -8,22 +8,28 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 import java.util.List;
-import java.util.Objects;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
+@EqualsAndHashCode(callSuper = false, exclude = "id")
 @EntityListeners(AuditListener.class)
 @Entity
 @Table(name = "epam.users")
-public class User extends RepresentationModel<User> {
+public class AppUser extends RepresentationModel<AppUser> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    @Min(1)
+    @Min(0)
     private int id;
+    @Pattern(regexp = "^.{0,60}$")
+    @NonNull
+    private String password;
+    @Enumerated(EnumType.STRING)
+    @NonNull
+    private Role role;
     @Pattern(regexp = "^.{0,45}$")
     @NonNull
     private String nickname;
@@ -42,18 +48,4 @@ public class User extends RepresentationModel<User> {
     @Min(0)
     @NonNull
     private int overageOrderPrice;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        User user = (User) o;
-        return money == user.money && overageOrderPrice == user.overageOrderPrice && Objects.equals(nickname, user.nickname) && Objects.equals(certificates, user.certificates);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), nickname, money, certificates, overageOrderPrice);
-    }
 }

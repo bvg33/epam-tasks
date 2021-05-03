@@ -3,10 +3,7 @@ package com.epam.ems.service.user;
 import com.epam.ems.dao.CRUDDao;
 import com.epam.ems.dao.orderdao.OrderDaoImpl;
 import com.epam.ems.dao.userdao.UserDaoImpl;
-import com.epam.ems.dto.Certificate;
-import com.epam.ems.dto.Tag;
-import com.epam.ems.dto.User;
-import com.epam.ems.dto.UserOrderInfo;
+import com.epam.ems.dto.*;
 import com.epam.ems.exceptions.NotEnoughMoneyException;
 import com.epam.ems.logic.handler.DateHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +26,7 @@ public class UserService {
     @Autowired
     private DateHandler dateHandler;
 
-    public List<User> getAllUsers(int page, int elements) {
+    public List<AppUser> getAllUsers(int page, int elements) {
         return dao.getAll(page, elements);
     }
 
@@ -38,10 +35,10 @@ public class UserService {
     }
 
     public void addCertificateToUser(int userId, int certificateId) throws NotEnoughMoneyException {
-        User user = dao.getById(userId);
+        AppUser user = dao.getById(userId);
         Certificate certificate = certificateDao.getById(certificateId);
         if (user.getMoney() >= certificate.getPrice()) {
-            User newUser = createNewUser(user, certificate);
+            AppUser newUser = createNewUser(user, certificate);
             orderDao.addCertificateToUser(createOrder(newUser, certificate));
             dao.updateUser(newUser);
         } else {
@@ -49,7 +46,7 @@ public class UserService {
         }
     }
 
-    private UserOrderInfo createOrder(User user, Certificate certificate) {
+    private UserOrderInfo createOrder(AppUser user, Certificate certificate) {
         int userId = user.getId();
         int certificatePrice = certificate.getPrice();
         int certificateId = certificate.getId();
@@ -58,19 +55,29 @@ public class UserService {
 
     }
 
-    private User createNewUser(User oldUser, Certificate certificate) {
+    private AppUser createNewUser(AppUser oldUser, Certificate certificate) {
         int money = oldUser.getMoney() - certificate.getPrice();
         int id = oldUser.getId();
         List<Certificate> certificates = oldUser.getCertificates();
         String name = oldUser.getNickname();
         int overageOrderPrice = oldUser.getOverageOrderPrice() + certificate.getPrice();
-        User newUser = new User(id, name, money, certificates, overageOrderPrice);
+        String password = oldUser.getPassword();
+        Role role = oldUser.getRole();
+        AppUser newUser = new AppUser(id, password, role, name, money, certificates, overageOrderPrice);
         dao.updateUser(newUser);
         return newUser;
     }
 
     public List<UserOrderInfo> getUserOrdersInfo(int id, int page, int elements) {
         return orderDao.getUserCertificatesInfo(id, page, elements);
+    }
+
+    public void saveUser(AppUser user) {
+        dao.saveUser(user);
+    }
+
+    public AppUser getUserByUserName(String username) {
+        return dao.getUserByNickname(username);
     }
 
     public Tag theMostWidelyUsedTag() {

@@ -27,7 +27,7 @@ public class MySqlDataBaseConfig {
         config.setJdbcUrl(env.getProperty("spring.datasource.url"));
         config.setUsername(env.getProperty("spring.datasource.username"));
         config.setPassword(env.getProperty("spring.datasource.password"));
-        config.setMaximumPoolSize(10);
+        config.setMaximumPoolSize(100);
         return new HikariDataSource(config);
     }
 

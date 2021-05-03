@@ -2,6 +2,7 @@ package com.epam.ems.dto.fields;
 
 public class Constant {
     public static final String USER_ID = "id";
+    public static final String NICKNAME = "nickname";
     public static final String CERTIFICATES = "certificates";
     public static final String CREATE_DATE = "createDate";
     public static final String OVERAGE_ORDER_PRICE = "overageOrderPrice";

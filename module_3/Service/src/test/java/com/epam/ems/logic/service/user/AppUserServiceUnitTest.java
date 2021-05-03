@@ -2,7 +2,8 @@ package com.epam.ems.logic.service.user;
 
 import com.epam.ems.dao.userdao.UserDaoImpl;
 import com.epam.ems.dto.Certificate;
-import com.epam.ems.dto.User;
+import com.epam.ems.dto.AppUser;
+import com.epam.ems.dto.Role;
 import com.epam.ems.service.user.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,13 +23,13 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @ContextConfiguration
-public class UserServiceUnitTest {
+public class AppUserServiceUnitTest {
     private List<Certificate> certificates = Arrays.asList(new Certificate("name1", "desc1", 5, 6, new String(), new String(), new ArrayList<>()),
             new Certificate("name2", "desc2", 3, 4, new String(), new String(), new ArrayList<>()),
             new Certificate("name3", "desc3", 1, 2, new String(), new String(), new ArrayList<>()));
 
-    private List<User> users = Arrays.asList(new User("name", 10, certificates, 5),
-            new User("name1", 5, certificates, 2));
+    private List<AppUser> users = Arrays.asList(new AppUser("password", Role.USER, "name", 10, certificates, 5),
+            new AppUser("password", Role.USER, "name1", 5, certificates, 2));
 
     @Mock
     private UserDaoImpl dao = Mockito.mock(UserDaoImpl.class);
@@ -39,8 +40,8 @@ public class UserServiceUnitTest {
     @Test
     public void testGetAllUsers() {
         when(dao.getAll(anyInt(), anyInt())).thenReturn(users);
-        List<User> actual = service.getAllUsers(1, 2);
-        List<User> expected = new ArrayList<>(users);
+        List<AppUser> actual = service.getAllUsers(1, 2);
+        List<AppUser> expected = new ArrayList<>(users);
         assertEquals(expected, actual);
     }
 

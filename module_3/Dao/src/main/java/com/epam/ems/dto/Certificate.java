@@ -14,6 +14,7 @@ import java.util.Objects;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = false, exclude = "id")
 @EntityListeners(AuditListener.class)
 @Entity
 @Table(name = "epam.gift_certificate")
@@ -54,19 +55,5 @@ public class Certificate extends RepresentationModel<Certificate> {
         this.createDate = createDate;
         this.lastUpdateDate = lastUpdateDate;
         this.tags = new ArrayList<>(tags);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Certificate that = (Certificate) o;
-        return price == that.price && duration == that.duration && Objects.equals(name, that.name) && Objects.equals(description, that.description) &&
-                tags.equals(that.tags);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, description, price, duration, createDate, lastUpdateDate, tags);
     }
 }

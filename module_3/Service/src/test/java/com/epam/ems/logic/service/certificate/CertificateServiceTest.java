@@ -35,11 +35,11 @@ public class CertificateServiceTest {
     @Test
     public void testGetAll() {
         List<Certificate> actual = service.getAll(1, 5);
-        List<Certificate> expected = Arrays.asList(new Certificate("sad", "dsf", 4, 5,
+        List<Certificate> expected = Arrays.asList(new Certificate(1, "sad", "dsf", 4, 5,
                         "2021-11-10 00:00:00.000000", "2021-11-10 00:00:00.000000", Arrays.asList(new Tag("tag1"), new Tag("tag2"))),
-                new Certificate("name1", "description", 5, 5,
+                new Certificate(2, "name1", "description", 5, 5,
                         "2021-04-03 21:07:00.000000", "2021-04-04 20:46:00.000000", Arrays.asList(new Tag("tag2"))),
-                new Certificate("sdfkl", "1", 5, 4,
+                new Certificate(3, "sdfkl", "1", 5, 4,
                         "2021-04-05 15:03:00.000000", "2021-04-05 15:03:00.000000", Arrays.asList(new Tag("tag3"))));
         assertEquals(expected, actual);
     }
@@ -47,7 +47,7 @@ public class CertificateServiceTest {
     @Test
     public void testGetById() {
         Certificate actual = service.getById(1);
-        Certificate expected = new Certificate("sad", "dsf", 4, 5,
+        Certificate expected = new Certificate(1, "sad", "dsf", 4, 5,
                 "2021-11-10 00:00:00.000000", "2021-11-10 00:00:00.000000", Arrays.asList(new Tag("tag1"), new Tag("tag2")));
         assertEquals(expected, actual);
     }
@@ -57,9 +57,9 @@ public class CertificateServiceTest {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("getByTagName", "tag2");
         List<Certificate> actual = service.doFilter(params, 1, 5);
-        List<Certificate> expected = Arrays.asList(new Certificate("sad", "dsf", 4, 5,
+        List<Certificate> expected = Arrays.asList(new Certificate(1, "sad", "dsf", 4, 5,
                         "2021-11-10 00:00:00.000000", "2021-11-10 00:00:00.000000", Arrays.asList(new Tag("tag1"), new Tag("tag2"))),
-                new Certificate("name1", "description", 5, 5,
+                new Certificate(2, "name1", "description", 5, 5,
                         "2021-04-03 21:07:00.000000", "2021-04-04 20:46:00.000000", Arrays.asList(new Tag("tag2"))));
         assertEquals(expected, actual);
     }
@@ -69,9 +69,9 @@ public class CertificateServiceTest {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("getByNamePart", "a");
         List<Certificate> actual = service.doFilter(params, 1, 5);
-        List<Certificate> expected = Arrays.asList(new Certificate("sad", "dsf", 4, 5,
+        List<Certificate> expected = Arrays.asList(new Certificate(1, "sad", "dsf", 4, 5,
                         "2021-11-10 00:00:00.000000", "2021-11-10 00:00:00.000000", Arrays.asList(new Tag("tag1"), new Tag("tag2"))),
-                new Certificate("name1", "description", 5, 5,
+                new Certificate(2, "name1", "description", 5, 5,
                         "2021-04-03 21:07:00.000000", "2021-04-04 20:46:00.000000", Arrays.asList(new Tag("tag2"))));
         assertEquals(expected, actual);
     }
@@ -82,7 +82,7 @@ public class CertificateServiceTest {
         params.add("getByNamePart", "a");
         params.add("getByTagName", "tag1");
         List<Certificate> actual = service.doFilter(params, 1, 5);
-        List<Certificate> expected = Arrays.asList(new Certificate("sad", "dsf", 4, 5,
+        List<Certificate> expected = Arrays.asList(new Certificate(1, "sad", "dsf", 4, 5,
                 "2021-11-10 00:00:00.000000", "2021-11-10 00:00:00.000000",
                 Arrays.asList(new Tag("tag1"), new Tag("tag2"))));
         assertEquals(expected, actual);
@@ -93,11 +93,11 @@ public class CertificateServiceTest {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("sortByName", "asc");
         List<Certificate> actual = service.doFilter(params, 1, 5);
-        List<Certificate> expected = Arrays.asList(new Certificate("name1", "description", 5, 5,
+        List<Certificate> expected = Arrays.asList(new Certificate(2, "name1", "description", 5, 5,
                         "2021-04-03 21:07:00.000000", "2021-04-04 20:46:00.000000", Arrays.asList(new Tag("tag2"))),
-                new Certificate("sad", "dsf", 4, 5,
+                new Certificate(1, "sad", "dsf", 4, 5,
                         "2021-11-10 00:00:00.000000", "2021-11-10 00:00:00.000000", Arrays.asList(new Tag("tag1"), new Tag("tag2"))),
-                new Certificate("sdfkl", "1", 5, 4,
+                new Certificate(3, "sdfkl", "1", 5, 4,
                         "2021-04-05 15:03:00.000000", "2021-04-05 15:03:00.000000", Arrays.asList(new Tag("tag3"))));
         assertEquals(expected, actual);
     }
@@ -107,11 +107,11 @@ public class CertificateServiceTest {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("sortByDate", "asc");
         List<Certificate> actual = service.doFilter(params, 1, 5);
-        List<Certificate> expected = Arrays.asList(new Certificate("name1", "description", 5, 5,
+        List<Certificate> expected = Arrays.asList(new Certificate(2, "name1", "description", 5, 5,
                         "2021-04-03 21:07:00.000000", "2021-04-04 20:46:00.000000", Arrays.asList(new Tag("tag2"))),
-                new Certificate("sdfkl", "1", 5, 4,
+                new Certificate(3, "sdfkl", "1", 5, 4,
                         "2021-04-05 15:03:00.000000", "2021-04-05 15:03:00.000000", Arrays.asList(new Tag("tag3"))),
-                new Certificate("sad", "dsf", 4, 5,
+                new Certificate(1, "sad", "dsf", 4, 5,
                         "2021-11-10 00:00:00.000000", "2021-11-10 00:00:00.000000", Arrays.asList(new Tag("tag1"), new Tag("tag2"))));
         assertEquals(expected, actual);
     }

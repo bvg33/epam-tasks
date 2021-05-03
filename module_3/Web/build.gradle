@@ -11,6 +11,6 @@ repositories {
 
 dependencies {
     compile(project(':service'))
-
+    compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.4'
 }

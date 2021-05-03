@@ -31,6 +31,8 @@ create TABLE epam.gift_certificate
 create TABLE epam.users
 (
     user_id             INTEGER PRIMARY KEY,
+    password            varchar(60),
+    role                varchar(45),
     nickname            varchar(45),
     money               int,
     overage_order_price int

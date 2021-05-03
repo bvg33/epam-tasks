@@ -14,6 +14,7 @@ import java.util.Objects;
 @Table(name = "epam.tag")
 @Data
 @AllArgsConstructor
+@EqualsAndHashCode(of = "tagName")
 @NoArgsConstructor
 @RequiredArgsConstructor
 public class Tag extends RepresentationModel<Tag> {
@@ -25,17 +26,4 @@ public class Tag extends RepresentationModel<Tag> {
     @Pattern(regexp = "^.{0,45}$")
     @NonNull
     private String tagName;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Tag tag = (Tag) o;
-        return Objects.equals(tagName, tag.tagName);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(tagName);
-    }
 }
